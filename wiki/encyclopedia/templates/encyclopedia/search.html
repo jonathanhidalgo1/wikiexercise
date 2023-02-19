@@ -8,6 +8,11 @@
     <h1>Search</h1>
     {% if searched %}
         <h3> You searched fo {{ searched }}</h3>
-    
+    {% else %}
+        <ul>
+            {% for name in searchlist%}
+                <li>You searched for <a href="{% url name %}"> {{ name }}</a></li>
+            {% endfor%}
+        </ul>
     {% endif%}
 {% endblock %}

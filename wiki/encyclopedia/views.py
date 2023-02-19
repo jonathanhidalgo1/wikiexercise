@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+import re
 
 from . import util
 
@@ -50,10 +51,12 @@ def search(request):
             return render(request, f"encyclopedia/{searched}.html",{
         "texts": util.get_entry(searched)
     })
-    else:
-        return render(request, "encyclopedia/search.html", {
-            "searchlist": util.list_entries()
-        })
+        else:            
+            r = re.compile(f".*{searched}")
+            newlist = list(filter(r.match, util.list_entries()))       
+            return render(request, "encyclopedia/search.html", {
+                "searchlist": newlist
+            })
     
         
     
