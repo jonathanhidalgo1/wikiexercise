@@ -11,7 +11,8 @@ urlpatterns = [
     path("html", views.html, name="HTML"),
     path("python", views.python, name="Python"),
     # path("<str:name>", views.pagenotfound, name="pagenotfound"),
-    path("search", views.search, name="search")
+    path("search", views.search, name="search"),
+    path("create", views.create, name="create")
     
     
 ]

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseNotFound
 import re
 
 from . import util
@@ -36,38 +36,32 @@ def python(request):
         "texts": util.get_entry("Python")
     })
     
-def pagenotfound(request, name):
-    pass
-    
-    # return render(request, "encyclopedia/pagenotfound.html", {
-    #     "name": name.capitalize()
-    # })
-    #colocar uma condicao para aceita a pagina search
-    
+# def pagenotfound(request, name):
+      
+#     return render(request, "encyclopedia/pagenotfound.html", {
+#         "name": name.capitalize()
+#     })
+                   
+        
 def search(request):
     if request.method == "POST":
-        searched = request.POST["searched"]
-        if searched in util.list_entries():
-            return render(request, f"encyclopedia/{searched}.html",{
-        "texts": util.get_entry(searched)
-    })
-        else:            
-            r = re.compile(f".*{searched}")
-            newlist = list(filter(r.match, util.list_entries()))       
+        searched = request.POST["searched"]        
+        r = re.compile(f".*{searched}")
+        newlist = list(filter(r.match, util.list_entries()))           
+        
+        for entry in util.list_entries():
+            if searched.lower() == entry.lower():
+                return HttpResponseRedirect(reverse(f"{entry}"))            
+        
+        if newlist:          
             return render(request, "encyclopedia/search.html", {
                 "searchlist": newlist
-            })
-    
+            })  
+            
+        else:
+            return HttpResponseNotFound(f'<h1>Page {searched} not found</h1>')
         
-    
-    
-    # if "Git" in util.list_entries():
-    #     return render(request, "encyclopedia/search.html", {
-    #         "searchlist": util.list_entries()
-    #     })
-    # else:
-    #     pass
-    
 
-    
-    
+
+def create(request):
+    pass
