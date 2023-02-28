@@ -9,7 +9,8 @@
 
     <ul>
         {% for entry in entries %}
-            <li><a href= "{% url entry %}">{{ entry }}</a></li>
+            <li><a href= "{% url 'library' entry %}">{{ entry }}</a></li>
+                {% comment %} LINK DYNAMIC URL {% endcomment %}
         {% endfor %}
     </ul>
 
