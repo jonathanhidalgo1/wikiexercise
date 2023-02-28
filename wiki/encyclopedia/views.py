@@ -15,9 +15,9 @@ def index(request):
     })
                    
 def library(request, name):
-    
+    test = util.convert_entry(name)
     return render(request, "encyclopedia/library.html", {
-        "name":name ,"texts":util.get_entry(name)
+        "name":name ,"texts":util.get_entry_html(name)
     })
                
 def search(request):

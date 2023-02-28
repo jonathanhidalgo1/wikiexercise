@@ -6,7 +6,7 @@
 
 {% block body %}
     {% if texts %}
-        {{ texts }}
+        {{ texts|safe }}
     {% else %}
         Not Found
     {% endif%}
